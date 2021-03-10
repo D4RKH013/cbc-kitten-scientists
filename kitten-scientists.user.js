@@ -4,7 +4,7 @@
 // @description Launch Kitten Scientists
 // @author      cameroncondry
 // @homepageURL https://github.com/cameroncondry/cbc-kitten-scientists
-// @updateURL   https://cdn.jsdelivr.net/gh/cameroncondry/cbc-kitten-scientists@master/kitten-scientists.user.js
+// @updateURL   https://github.com/D4RKH013/cbc-kitten-scientists/raw/tinkering/kitten-scientists.user.js
 // @include     file:///*kitten-game*
 // @include     /^https?://(www\.)?bloodrizer\.ru/games/kittens//
 // @include     /^https?://(www\.)?kittensgame\.com/(web|beta|alpha)//
