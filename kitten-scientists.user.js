@@ -2,15 +2,17 @@
 // @name        Kitten Scientists
 // @namespace   http://www.reddit.com/r/kittensgame/comments/34gb2u/kitten_scientists_automation_script/
 // @description Launch Kitten Scientists
-// @include     *bloodrizer.ru/games/kittens/*
+// @author      cameroncondry
+// @homepageURL https://github.com/cameroncondry/cbc-kitten-scientists
+// @updateURL   https://cdn.jsdelivr.net/gh/cameroncondry/cbc-kitten-scientists@master/kitten-scientists.user.js
 // @include     file:///*kitten-game*
-// @include     *kittensgame.com/web/*
-// @include     *kittensgame.com/beta/*
-// @include     *kittensgame.com/alpha/*
+// @include     /^https?://(www\.)?bloodrizer\.ru/games/kittens//
+// @include     /^https?://(www\.)?kittensgame\.com/(web|beta|alpha)//
 // @version     1.5.0
 // @grant       none
-// @copyright   2015, cameroncondry
 // ==/UserScript==
+
+var code = "(" + (function() {
 
 // ==========================================
 // Begin Kitten Scientist's Automation Engine
@@ -3427,6 +3429,7 @@ var run = function() {
 
     var saveToKittenStorage = function () {
         kittenStorage.toggles = {
+            engine: options.auto.engine.enabled,
             build: options.auto.build.enabled,
             space: options.auto.space.enabled,
             craft: options.auto.craft.enabled,
@@ -3470,11 +3473,9 @@ var run = function() {
 
             if (saved.toggles) {
                 for (var toggle in saved.toggles) {
-                    if (toggle !== 'engine' && options.auto[toggle]) {
-                        options.auto[toggle].enabled = !!saved.toggles[toggle];
-                        var el = $('#toggle-' + toggle);
-                        el.prop('checked', options.auto[toggle].enabled);
-                    }
+                    options.auto[toggle].enabled = !!saved.toggles[toggle];
+                    var el = $('#toggle-' + toggle);
+                    el.prop('checked', options.auto[toggle].enabled);
                 }
             }
 
@@ -5079,9 +5080,11 @@ var run = function() {
     toggleEngine.on('change', function () {
         if (toggleEngine.is(':checked')) {
             options.auto.engine.enabled = true;
+            saveToKittenStorage();
             engine.start();
         } else {
             options.auto.engine.enabled = false;
+            saveToKittenStorage();
             engine.stop();
         }
     });
@@ -5140,3 +5143,7 @@ var loadTest = function() {
 }
 
 loadTest();
+
+}).toString() + ")()";
+
+window.eval(code);
