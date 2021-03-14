@@ -1898,8 +1898,9 @@ var run = function() {
             if (!game.prestige.getPerk('carnivals').researched && game.calendar.festivalDays > 0) {return;}
 
             var craftManager = this.craftManager;
-            if (craftManager.getValueAvailable('manpower', true) < 1500 || craftManager.getValueAvailable('culture', true) < 5000
-                || craftManager.getValueAvailable('parchment', true) < 2500) {return;}
+            if (craftManager.getValueAvailable('manpower', true) < 1500 ||
+                craftManager.getValueAvailable('culture', true) < 5000 ||
+                craftManager.getValueAvailable('parchment', true) < 2500) {return;}
 
             var catpowProf = 4000 * craftManager.getTickVal(craftManager.getResource('manpower'), true) > 1500;
             var cultureProf = 4000 * craftManager.getTickVal(craftManager.getResource('culture'), true) > 5000;
@@ -2178,7 +2179,7 @@ var run = function() {
             var baseRift = game.getEffect('riftChance') * riftChanceRatio / (10000 * 2) * baseUnicornsPerRift;
             var bestAmoritization = Infinity;
             var bestBuilding = '';
-            var pastureAmor = game.bld.getBuildingExt('unicornPasture').meta.effects['unicornsPerTickBase'] * game.getTicksPerSecondUI();
+            var pastureAmor = game.bld.getBuildingExt('unicornPasture').meta.effects.unicornsPerTickBase * game.getTicksPerSecondUI();
             pastureAmor = pastureAmor * globalRatio * religionRatio * paragonRatio * faithBonus * cycle;
             pastureAmor = pastureButton.model.prices[0].val / pastureAmor;
             if(pastureAmor < bestAmoritization){
@@ -2201,7 +2202,7 @@ var run = function() {
                         var riftChance = game.getEffect('riftChance');
                         for(var j in bld.effects){
                             if(j == 'unicornsRatioReligion')
-                                relBonus += bld.effects[j]
+                                relBonus += bld.effects[j];
                             if(j == 'riftChance')
                                 riftChance += bld.effects[j];
                         }
@@ -2289,14 +2290,14 @@ var run = function() {
                 var yCoord = parseInt(keyMatch[2]);
 
                 if (this.currentCheapestNode == null) {
-                    this.currentCheapestNodeValue = this.getNodeValue(xCoord, yCoord)
+                    this.currentCheapestNodeValue = this.getNodeValue(xCoord, yCoord);
                     this.currentCheapestNode = i;
                     this.cheapestNodeX = xCoord;
                     this.cheapestNodeY = yCoord;
                 }
 
                 if (this.currentCheapestNode != null && this.getNodeValue(xCoord, yCoord) < this.currentCheapestNodeValue) {
-                    this.currentCheapestNodeValue = this.getNodeValue(xCoord, yCoord)
+                    this.currentCheapestNodeValue = this.getNodeValue(xCoord, yCoord);
                     this.currentCheapestNode = i;
                     this.cheapestNodeX = xCoord;
                     this.cheapestNodeY = yCoord;
@@ -2721,25 +2722,25 @@ var run = function() {
                 prod += (minProd!==Number.MAX_VALUE) ? minProd : 0;
             }
             if (prod <= 0 && (res.name === 'spice' || res.name === 'blueprint')) {return 'ignore';}
-            if (!preTrade) {prod += this.cacheManager.getResValue(res.name)};
+            if (!preTrade) {prod += this.cacheManager.getResValue(res.name);}
             return prod;
         },
         getAverageHunt: function() {
             var output = {};
             var hunterRatio = game.getEffect('hunterRatio') + game.village.getEffectLeader('manager', 0);
 
-            output['furs'] = 40 + 32.5 * hunterRatio;
+            output.furs = 40 + 32.5 * hunterRatio;
 
-            output['ivory'] = 50 * Math.min(0.225 + 0.01 * hunterRatio, 0.5) + 40 * hunterRatio * Math.min(0.225 + 0.01 * hunterRatio, 0.5);
+            output.ivory = 50 * Math.min(0.225 + 0.01 * hunterRatio, 0.5) + 40 * hunterRatio * Math.min(0.225 + 0.01 * hunterRatio, 0.5);
 
-            output['unicorns'] = 0.05;
+            output.unicorns = 0.05;
 
             if (this.getValue('zebras') >= 10) {
-                output['bloodstone'] = (this.getValue('bloodstone') === 0) ? 0.05 : 0.0005;
+                output.bloodstone = (this.getValue('bloodstone') === 0) ? 0.05 : 0.0005;
             }
 
             if (game.ironWill && game.workshop.get('goldOre').researched) {
-                output['gold'] = 0.625 + 0.625 * hunterRatio;
+                output.gold = 0.625 + 0.625 * hunterRatio;
             }
 
             return output;
@@ -2751,7 +2752,7 @@ var run = function() {
             //     if (res.name === name) return res;
             // }
             var res = game.resPool.get(name);
-            if (res) return res
+            if (res) return res;
             warning('unable to find resource ' + name);
             return null;
         },
@@ -2778,7 +2779,7 @@ var run = function() {
             if ('catnip' === name) {
                 var pastures = (game.bld.getBuildingExt('pasture').meta.stage === 0) ? game.bld.getBuildingExt('pasture').meta.val: 0;
                 var aqueducts = (game.bld.getBuildingExt('aqueduct').meta.stage === 0) ? game.bld.getBuildingExt('aqueduct').meta.val: 0;
-                var resPerTick = this.getPotentialCatnip(true, pastures, aqueducts)
+                var resPerTick = this.getPotentialCatnip(true, pastures, aqueducts);
 
                 if (resPerTick < 0) stock -= resPerTick * 202 * 5;
             }
@@ -2801,7 +2802,7 @@ var run = function() {
             if (worstWeather) {
                 fieldProd *= 0.1;
             } else {
-                fieldProd *= game.calendar.getWeatherMod() + game.calendar.getCurSeason().modifiers['catnip'];
+                fieldProd *= game.calendar.getWeatherMod() + game.calendar.getCurSeason().modifiers.catnip;
             }
             var vilProd = (game.village.getResProduction().catnip) ? game.village.getResProduction().catnip * (1 + game.getEffect('catnipJobRatio')) : 0;
             var baseProd = fieldProd + vilProd;
@@ -2820,9 +2821,9 @@ var run = function() {
 
             if (!game.opts.disableCMBR) {baseProd *= (1 + game.getCMBRBonus());}
 
-            baseProd = game.calendar.cycleEffectsFestival({catnip: baseProd})['catnip'];
+            baseProd = game.calendar.cycleEffectsFestival({catnip: baseProd}).catnip;
 
-            var baseDemand = game.village.getResConsumption()['catnip'];
+            var baseDemand = game.village.getResConsumption().catnip;
             var uniPastures = game.bld.getBuildingExt('unicornPasture').meta.val;
             baseDemand *= 1 + (game.getLimitedDR(pastures * -0.005 + uniPastures * -0.0015, 1.0));
             if (game.village.sim.kittens.length > 0 && game.village.happiness > 1) {
@@ -2862,8 +2863,7 @@ var run = function() {
                 if (data.tHidden === true) {continue;}
                 if (data.rHidden === true) {continue;}
                 if ((data.rHidden === undefined) && !data.unlocked) {continue;}
-                if (name === 'cryochambers' && (game.time.getVSU('usedCryochambers').val > 0
-                    || game.bld.getBuildingExt('chronosphere').meta.val <= data.val)) {continue;}
+                if (name === 'cryochambers' && (game.time.getVSU('usedCryochambers').val > 0 || game.bld.getBuildingExt('chronosphere').meta.val <= data.val)) {continue;}
                 if (name === 'ressourceRetrieval' && data.val >= 100) {continue;}
                 var prices = (data.stages) ? data.stages[data.stage].prices : data.prices;
                 var priceRatio = this.getPriceRatio(data, source);
@@ -2873,13 +2873,13 @@ var run = function() {
                     if (typeof(build.stage) !== 'undefined' && build.stage !== data.stage) {
                         continue;
                     }
-                    bList.push(new Object());
+                    bList.push(());
                     bList[counter].id = name;
                     bList[counter].label = build.label;
                     bList[counter].name = build.name;
                     bList[counter].stage = build.stage;
                     bList[counter].variant = build.variant;
-                    countList.push(new Object());
+                    countList.push(());
                     countList[counter].id = name;
                     countList[counter].name = build.name;
                     countList[counter].count = 0;
@@ -2908,7 +2908,7 @@ var run = function() {
 
             if (countList.length === 0) {return;}
 
-            var tempPool = new Object();
+            var tempPool = ();
             for (var res in game.resPool.resources) {
                 tempPool[game.resPool.resources[res].name]=game.resPool.resources[res].value;
             }
@@ -2936,21 +2936,23 @@ var run = function() {
                         }
 
                         if (spaceOil) {
-                            var nextPriceCheck = (tempPool['oil'] < oilPrice * Math.pow(1.05, k + data.val));
+                            var nextPriceCheck = (tempPool.oil < oilPrice * Math.pow(1.05, k + data.val));
                         } else if (cryoKarma) {
-                            var nextPriceCheck = (tempPool['karma'] < karmaPrice * Math.pow(priceRatio, k + data.val));
+                            var nextPriceCheck = (tempPool.karma < karmaPrice * Math.pow(priceRatio, k + data.val));
                         } else {
                             var nextPriceCheck = (tempPool[prices[p].name] < prices[p].val * Math.pow(priceRatio, k + data.val));
                         }
-                        if (nextPriceCheck || (data.noStackable && (k + data.val)>=1) || (build.id === 'ressourceRetrieval' && k + data.val >= 100)
-                          || (build.id === 'cryochambers' && game.bld.getBuildingExt('chronosphere').meta.val <= k + data.val)) {
+                        if (nextPriceCheck ||
+                            (data.noStackable && (k + data.val)>=1) ||
+                            (build.id === 'ressourceRetrieval' && k + data.val >= 100) ||
+                            (build.id === 'cryochambers' && game.bld.getBuildingExt('chronosphere').meta.val <= k + data.val)) {
                             for (var p2 = 0; p2 < p; p2++) {
                                 if (source && source === 'space' && prices[p2].name === 'oil') {
                                     var oilPriceRefund = prices[p2].val * (1 - game.getLimitedDR(game.getEffect('oilReductionRatio'), 0.75));
-                                    tempPool['oil'] += oilPriceRefund * Math.pow(1.05, k + data.val);
+                                    tempPool.oil += oilPriceRefund * Math.pow(1.05, k + data.val);
                                 } else if (build.id === 'cryochambers' && prices[p2].name === 'karma') {
                                     var karmaPriceRefund = prices[p2].val * (1 - game.getLimitedDR(0.01 * game.prestige.getBurnedParagonRatio(), 1.0));
-                                    tempPool['karma'] += karmaPriceRefund * Math.pow(priceRatio, k + data.val);
+                                    tempPool.karma += karmaPriceRefund * Math.pow(priceRatio, k + data.val);
                                 } else {
                                     var refundVal = prices[p2].val * Math.pow(priceRatio, k + data.val);
                                     tempPool[prices[p2].name] += (prices[p2].name === 'void') ? Math.ceil(refundVal) : refundVal;
@@ -2965,9 +2967,9 @@ var run = function() {
                             continue bulkLoop;
                         }
                         if (spaceOil) {
-                            tempPool['oil'] -= oilPrice * Math.pow(1.05, k + data.val);
+                            tempPool.oil -= oilPrice * Math.pow(1.05, k + data.val);
                         } else if (cryoKarma) {
-                            tempPool['karma'] -= karmaPrice * Math.pow(priceRatio, k + data.val);
+                            tempPool.karma -= karmaPrice * Math.pow(priceRatio, k + data.val);
                         } else {
                             var pVal = prices[p].val * Math.pow(priceRatio, k + data.val);
                             tempPool[prices[p].name] -= (prices[p].name === 'void') ? Math.ceil(pVal) : pVal;
@@ -3121,9 +3123,9 @@ var run = function() {
 
             var spiceChance = (race.embassyPrices) ? 0.35 * (1 + 0.01 * race.embassyLevel) : 0.35;
             var spiceTradeAmount = successRat * Math.min(spiceChance, 1);
-            output['spice'] = 25 * spiceTradeAmount + 50 * spiceTradeAmount * tRatio / 2;
+            output.spice = 25 * spiceTradeAmount + 50 * spiceTradeAmount * tRatio / 2;
 
-            output['blueprint'] = 0.1 * successRat;
+            output.blueprint = 0.1 * successRat;
 
             return output;
         },
@@ -3240,7 +3242,7 @@ var run = function() {
         pushToCache: function (data) {
             var cache = options.auto.cache.cache;
             var cacheSum = options.auto.cache.cacheSum;
-            var materials = data['materials'];
+            var materials = data.materials;
             var currentTick = game.timer.ticksTotal;
 
             cache.push(data);
@@ -3252,7 +3254,7 @@ var run = function() {
             for (var i = 0; i < cache.length; i++) {
                 var oldData = cache[i];
                 if (cache.length > 10000) {
-                    var oldMaterials = oldData['materials'];
+                    var oldMaterials = oldData.materials;
                     for (var mat in oldMaterials) {
                         if (!cacheSum[mat]) {cacheSum[mat] = 0;}
                         cacheSum[mat] -= oldMaterials[mat];
@@ -3289,112 +3291,112 @@ var run = function() {
 
     var defaultSelector = 'body[data-ks-style]:not(.scheme_sleek)';
 
-    addRule('body {' // low priority. make sure it can be covered by the theme
-        + 'font-family: monospace;'
-        + 'font-size: 12px;'
-        + '}');
+    addRule('body {' + // low priority. make sure it can be covered by the theme
+        'font-family: monospace;' +
+        'font-size: 12px;' +
+        '}');
 
-    addRule(defaultSelector + ' #game {'
-        // + 'font-family: monospace;'
-        // + 'font-size: 12px;'
-        + 'min-width: 1300px;'
-        + 'top: 32px;'
-        + '}');
+    addRule(defaultSelector + ' #game {' +
+        // 'font-family: monospace;' +
+        // 'font-size: 12px;' +
+        'min-width: 1300px;' +
+        'top: 32px;' +
+        '}');
 
-    // addRule(defaultSelector + ' {'
-    //     + 'font-family: monospace;'
-    //     + 'font-size: 12px;'
-    //     + '}');
+    // addRule(defaultSelector + ' {' +
+    //     'font-family: monospace;' +
+    //     'font-size: 12px;' +
+    //     '}');
 
-    addRule(defaultSelector + ' .column {'
-        + 'min-height: inherit;'
-        + 'max-width: inherit !important;'
-        + 'padding: 1%;'
-        + 'margin: 0;'
-        + 'overflow-y: auto;'
-        + '}');
+    addRule(defaultSelector + ' .column {' +
+        'min-height: inherit;' +
+        'max-width: inherit !important;' +
+        'padding: 1%;' +
+        'margin: 0;' +
+        'overflow-y: auto;' +
+        '}');
 
-    addRule(defaultSelector + ' #leftColumn {'
-        + 'height: 92%;'
-        + 'width: 26%;'
-        + '}');
+    addRule(defaultSelector + ' #leftColumn {' +
+        'height: 92%;' +
+        'width: 26%;' +
+        '}');
 
-    addRule(defaultSelector + ' #midColumn {'
-        + 'margin-top: 1% !important;'
-        + 'height: 90%;'
-        + 'width: 48%;'
-        + '}');
+    addRule(defaultSelector + ' #midColumn {' +
+        'margin-top: 1% !important;' +
+        'height: 90%;' +
+        'width: 48%;' +
+        '}');
 
-    addRule(defaultSelector + ' #rightColumn {'
-        + 'overflow-y: auto;'
-        + 'height: 92%;'
-        + 'width: 19%;'
-        + '}');
+    addRule(defaultSelector + ' #rightColumn {' +
+        'overflow-y: auto;' +
+        'height: 92%;' +
+        'width: 19%;' +
+        '}');
 
-    addRule('body #gamePageContainer #game #rightColumn {'
-        + 'overflow-y: auto'
-        + '}');
+    addRule('body #gamePageContainer #game #rightColumn {' +
+        'overflow-y: auto' +
+        '}');
 
-    // addRule(defaultSelector + ' #gameLog .msg {'
-    //     + 'display: block;'
-    //     + '}');
+    // addRule(defaultSelector + ' #gameLog .msg {' +
+    //     'display: block;' +
+    //     '}');
 
-    addRule(defaultSelector + ' #gameLog {'
-        + 'overflow-y: hidden !important;'
-        + 'width: 100% !important;'
-        + 'padding-top: 5px !important;'
-        + '}');
+    addRule(defaultSelector + ' #gameLog {' +
+        'overflow-y: hidden !important;' +
+        'width: 100% !important;' +
+        'padding-top: 5px !important;' +
+        '}');
 
-    addRule(defaultSelector + ' #resContainer .maxRes {'
-        + 'color: #676766;'
-        + '}');
+    addRule(defaultSelector + ' #resContainer .maxRes {' +
+        'color: #676766;' +
+        '}');
 
-    addRule(defaultSelector + ' #game .btn {'
-        + 'border-radius: 0px;'
-        + 'font-family: monospace;'
-        + 'font-size: 12px !important;'
-        + 'margin: 0 5px 7px 0;'
-        + 'width: 290px;'
-        + '}');
+    addRule(defaultSelector + ' #game .btn {' +
+        'border-radius: 0px;' +
+        'font-family: monospace;' +
+        'font-size: 12px !important;' +
+        'margin: 0 5px 7px 0;' +
+        'width: 290px;' +
+        '}');
 
-    addRule(defaultSelector + ' #game .map-viewport {'
-        + 'height: 340px;'
-        + 'max-width: 500px;'
-        + 'overflow: visible;'
-        + '}');
+    addRule(defaultSelector + ' #game .map-viewport {' +
+        'height: 340px;' +
+        'max-width: 500px;' +
+        'overflow: visible;' +
+        '}');
 
-    addRule(' #game .map-dashboard {'
-        + 'height: 120px;'
-        + 'width: 292px;'
-        + '}');
+    addRule(' #game .map-dashboard {' +
+        'height: 120px;' +
+        'width: 292px;' +
+        '}');
 
-    addRule('#ks-options ul {'
-        + 'list-style: none;'
-        + 'margin: 0 0 5px;'
-        + 'padding: 0;'
-        + '}');
+    addRule('#ks-options ul {' +
+        'list-style: none;' +
+        'margin: 0 0 5px;' +
+        'padding: 0;' +
+        '}');
 
-    addRule('#ks-options ul:after {'
-        + 'clear: both;'
-        + 'content: " ";'
-        + 'display: block;'
-        + 'height: 0;'
-        + '}');
+    addRule('#ks-options ul:after {' +
+        'clear: both;' +
+        'content: " ";' +
+        'display: block;' +
+        'height: 0;' +
+        '}');
 
-    addRule('#ks-options ul li {'
-        + 'display: block;'
-        + 'float: left;'
-        + 'width: 100%;'
-        + '}');
+    addRule('#ks-options ul li {' +
+        'display: block;' +
+        'float: left;' +
+        'width: 100%;' +
+        '}');
 
-    addRule('#ks-options #toggle-list-resources .stockWarn *,'
-        + '#ks-options #toggle-reset-list-resources .stockWarn * {'
-        + 'color: ' + options.stockwarncolor + ';'
-        + '}');
+    addRule('#ks-options #toggle-list-resources .stockWarn *,' +
+        '#ks-options #toggle-reset-list-resources .stockWarn * {' +
+        'color: ' + options.stockwarncolor + ';' +
+        '}');
 
-    addRule('.right-tab {'
-        + 'height: unset !important;'
-        + '}');
+    addRule('.right-tab {' +
+        'height: unset !important;' +
+        '}');
 
     // Local Storage
     // =============
@@ -3569,7 +3571,7 @@ var run = function() {
     };
 
     var roundToTwo = function (n) {
-        return +(Math.round(n + "e+2") + "e-2")
+        return +(Math.round(n + "e+2") + "e-2");
     };
 
     var setStockWarning = function(name, value, forReset=false) {
@@ -3580,7 +3582,7 @@ var run = function() {
 
         var maxValue = game.resPool.resources.filter(i => i.name == name)[0].maxValue;
         if ((value > maxValue && !(maxValue === 0)) || value === Infinity) $(path).addClass("stockWarn");
-    }
+    };
 
     var setStockValue = function (name, value, forReset=false) {
         var n = Number(value);
@@ -3689,7 +3691,7 @@ var run = function() {
                     setStockValue(name, value, forReset);
                     saveToKittenStorage();
                 }
-            })
+            });
         })(stock, forReset);
 
         consume.on('click', function () {
@@ -3707,7 +3709,7 @@ var run = function() {
                     removeResourceControl(name, forReset);
                     saveToKittenStorage();
                 }
-            })
+            });
         })(del, forReset);
 
         return container;
@@ -3864,8 +3866,8 @@ var run = function() {
         });
 
         list.append(enableall);
-        return list
-    }
+        return list;
+    };
 
     var getAdditionOptions = function () {
         var toggleName = 'faith-addition';
@@ -3878,7 +3880,7 @@ var run = function() {
             if (itemName == 'bestUnicornBuilding') {
                 node.children('label').prop('title', i18n('option.faith.best.unicorn.desc'));
                 input = node.children('input');
-                input.unbind('change')
+                input.unbind('change');
                 var bub = addi.bestUnicornBuilding;
                 input.on('change', function () {
                     if (input.is(':checked') && !bub.enabled) {
@@ -3928,7 +3930,7 @@ var run = function() {
                                 saveToKittenStorage();
                                 triggerButton[0].title = addi[itemName].subTrigger;
                             }
-                        })
+                        });
 
                     } else if (itemName == 'autoPraise') {
                         triggerButton.on('click', function () {
@@ -3951,7 +3953,7 @@ var run = function() {
         }
 
         return list;
-    }
+    };
 
     var getToggle = function (toggleName) {
         var itext = ucfirst(i18n('ui.' + toggleName));
@@ -4123,7 +4125,7 @@ var run = function() {
                             b.trigger('change');
                         }
                     });
-                };
+                }
             }
 
         }
@@ -4492,7 +4494,7 @@ var run = function() {
         element.append(input, label);
 
         return element;
-    }
+    };
 
     var getResetOption = function (name, type, option) {
         var element = $('<li/>');
@@ -4553,7 +4555,7 @@ var run = function() {
         element.append(input, label, minButton);
 
         return element;
-    }
+    };
 
     var getTimeCtrlOption = function (name, option) {
         var element = getOption(name, option);
@@ -4656,11 +4658,11 @@ var run = function() {
 
         } else if (name == 'reset') {
 
-            var resetBuildList     = getOptionHead('reset-build')
-            var resetSpaceList     = getOptionHead('reset-space')
+            var resetBuildList     = getOptionHead('reset-build');
+            var resetSpaceList     = getOptionHead('reset-space');
             var resetResourcesList = getResourceOptions(true);
-            var resetReligionList  = getOptionHead('reset-religion')
-            var resetTimeList      = getOptionHead('reset-time')
+            var resetReligionList  = getOptionHead('reset-religion');
+            var resetTimeList      = getOptionHead('reset-time');
 
             for (var item in options.auto.build.items)              resetBuildList.append(getResetOption(item, 'build', options.auto.build.items[item]));
             for (var item in options.auto.space.items)              resetSpaceList.append(getResetOption(item, 'space', options.auto.space.items[item]));
@@ -4679,11 +4681,11 @@ var run = function() {
             var timeButton = $('<div/>', {id: 'toggle-reset-time', text: i18n('ui.time'),
                 css: {cursor:'pointer',display:'inline-block',float:'right',paddingRight:'5px',textShadow:'3px 3px 4px gray'},});
 
-            buildButton.on('click', function(){resetBuildList.toggle(); resetSpaceList.toggle(false); resetResourcesList.toggle(false); resetReligionList.toggle(false); resetTimeList.toggle(false);})
-            spaceButton.on('click', function(){resetBuildList.toggle(false); resetSpaceList.toggle(); resetResourcesList.toggle(false); resetReligionList.toggle(false); resetTimeList.toggle(false);})
-            resourcesButton.on('click', function(){resetBuildList.toggle(false); resetSpaceList.toggle(false); resetResourcesList.toggle(); resetReligionList.toggle(false); resetTimeList.toggle(false);})
-            religionButton.on('click', function(){resetBuildList.toggle(false); resetSpaceList.toggle(false); resetResourcesList.toggle(false); resetReligionList.toggle(); resetTimeList.toggle(false);})
-            timeButton.on('click', function(){resetBuildList.toggle(false); resetSpaceList.toggle(false); resetResourcesList.toggle(false); resetReligionList.toggle(false); resetTimeList.toggle();})
+            buildButton.on('click', function(){resetBuildList.toggle(); resetSpaceList.toggle(false); resetResourcesList.toggle(false); resetReligionList.toggle(false); resetTimeList.toggle(false);});
+            spaceButton.on('click', function(){resetBuildList.toggle(false); resetSpaceList.toggle(); resetResourcesList.toggle(false); resetReligionList.toggle(false); resetTimeList.toggle(false);});
+            resourcesButton.on('click', function(){resetBuildList.toggle(false); resetSpaceList.toggle(false); resetResourcesList.toggle(); resetReligionList.toggle(false); resetTimeList.toggle(false);});
+            religionButton.on('click', function(){resetBuildList.toggle(false); resetSpaceList.toggle(false); resetResourcesList.toggle(false); resetReligionList.toggle(); resetTimeList.toggle(false);});
+            timeButton.on('click', function(){resetBuildList.toggle(false); resetSpaceList.toggle(false); resetResourcesList.toggle(false); resetReligionList.toggle(false); resetTimeList.toggle();});
 
             element.append(buildButton, spaceButton, resourcesButton, religionButton, timeButton,
                 resetBuildList, resetSpaceList, resetResourcesList, resetReligionList, resetTimeList);
@@ -4826,7 +4828,7 @@ var run = function() {
                     maxButton[0].title = option.max;
                     maxButton[0].innerText = i18n('ui.max', [option.max]);
                 }
-            })
+            });
         })(iname);
 
         element.append(maxButton);
@@ -4993,7 +4995,7 @@ var run = function() {
         }
 
         // Clear out the old activity
-        resetActivitySummary()
+        resetActivitySummary();
     };
 
     resetActivitySummary();
@@ -5041,7 +5043,7 @@ var run = function() {
         mbTitle.html(title);
         mbContent.html(content);
         messageBox.toggle();
-    }
+    };
 
     // Donation Button
     // ===============
@@ -5116,11 +5118,10 @@ var run = function() {
             pargonTotal: 0,
             karmaLastTime: 0,
             karmaTotal: 0
-        }
+        };
     }
     saveToKittenStorage();
-
-}
+};
 
 var loadTest = function() {
     if (typeof gamePage === 'undefined') {
@@ -5135,6 +5136,6 @@ var loadTest = function() {
         lang = localStorage['com.nuclearunicorn.kittengame.language'] ? localStorage['com.nuclearunicorn.kittengame.language'] : lang;
         run();
     }
-}
+};
 
 loadTest();
