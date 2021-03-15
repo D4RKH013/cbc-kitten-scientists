@@ -2411,7 +2411,6 @@ var run = function() {
             if (amount !== amountTemp) {warning(label + ' Amount ordered: '+amountTemp+' Amount Constructed: '+amount);}
             storeForSummary(label, amount, 'build');
 
-
             if (amount === 1) {
                 iactivity('act.build', [label], 'ks-build');
             } else {
@@ -4466,7 +4465,6 @@ var run = function() {
     var getCycle = function (index, option) {
         var cycle = game.calendar.cycles[index];
 
-
         var element = $('<li/>');
 
         var label = $('<label/>', {
@@ -4554,7 +4552,6 @@ var run = function() {
                 minButton[0].innerText = i18n('ui.min', [option.triggerForReset]);
             }
         });
-
 
         element.append(input, label, minButton);
 
@@ -4741,7 +4738,6 @@ var run = function() {
                 }
             });
         }
-
 
         if (option.subTrigger !== undefined) {
             var triggerButton = $('<div/>', {
