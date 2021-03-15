@@ -608,7 +608,7 @@ var run = function() {
                     chapel:         {require: 'minerals',    enabled: true, max:-1, checkForReset: true, triggerForReset: -1},
                     temple:         {require: 'gold',        enabled: true, max:-1, checkForReset: true, triggerForReset: -1},
                     mint:           {require: false,         enabled: false,max:-1,  checkForReset: true, triggerForReset: -1},
-                    // unicornPasture: {require: false,         enabled: true max:-1, checkForReset: true, triggerForReset: -1},
+                    // unicornPasture: {require: false,         enabled: true, max:-1, checkForReset: true, triggerForReset: -1},
                     ziggurat:       {require: false,         enabled: true, max:-1, checkForReset: true, triggerForReset: -1},
                     chronosphere:   {require: 'unobtainium', enabled: true, max:-1, checkForReset: true, triggerForReset: -1},
                     aiCore:         {require: false,         enabled: false,max:-1,  checkForReset: true, triggerForReset: -1},
