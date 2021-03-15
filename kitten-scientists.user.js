@@ -4,13 +4,14 @@
 // @description Launch Kitten Scientists
 // @author      cameroncondry
 // @homepageURL https://github.com/cameroncondry/cbc-kitten-scientists
-// @updateURL   https://github.com/cameroncondry/cbc-kitten-scientists/raw/master/kitten-scientists.user.js
 // @include     file:///*kitten-game*
 // @include     /^https?://(www\.)?bloodrizer\.ru/games/kittens//
 // @include     /^https?://(www\.)?kittensgame\.com/(web|beta|alpha)//
 // @version     1.5.0
 // @grant       none
 // ==/UserScript==
+
+var code = "(" + (function() {
 
 // ==========================================
 // Begin Kitten Scientist's Automation Engine
@@ -229,7 +230,7 @@ var run = function() {
             'summary.day': 'day',
             'summary.days': 'days',
             'summary.head': 'Summary of the last {0}',
-            'summary.show': 'Show activity',
+            'summary.show': 'Show activity'
         },
         'zh': {
             'option.observe': '观测天文事件',
@@ -433,8 +434,8 @@ var run = function() {
             'summary.day': '天',
             'summary.days': '天',
             'summary.head': '过去 {0} 的总结',
-            'summary.show': '总结',
-        },
+            'summary.show': '总结'
+        }
     };
     if (!i18nData[lang]) {
         console.error(lang + ' not found');
@@ -607,7 +608,7 @@ var run = function() {
                     chapel:         {require: 'minerals',    enabled: true, max:-1, checkForReset: true, triggerForReset: -1},
                     temple:         {require: 'gold',        enabled: true, max:-1, checkForReset: true, triggerForReset: -1},
                     mint:           {require: false,         enabled: false,max:-1,  checkForReset: true, triggerForReset: -1},
-                    // unicornPasture: {require: false,         enabled: true},
+                    // unicornPasture: {require: false,         enabled: true max:-1, checkForReset: true, triggerForReset: -1},
                     ziggurat:       {require: false,         enabled: true, max:-1, checkForReset: true, triggerForReset: -1},
                     chronosphere:   {require: 'unobtainium', enabled: true, max:-1, checkForReset: true, triggerForReset: -1},
                     aiCore:         {require: false,         enabled: false,max:-1,  checkForReset: true, triggerForReset: -1},
@@ -2873,13 +2874,13 @@ var run = function() {
                     if (typeof(build.stage) !== 'undefined' && build.stage !== data.stage) {
                         continue;
                     }
-                    bList.push(());
+                    bList.push(new Object());
                     bList[counter].id = name;
                     bList[counter].label = build.label;
                     bList[counter].name = build.name;
                     bList[counter].stage = build.stage;
                     bList[counter].variant = build.variant;
-                    countList.push(());
+                    countList.push(new Object());
                     countList[counter].id = name;
                     countList[counter].name = build.name;
                     countList[counter].count = 0;
@@ -2908,7 +2909,7 @@ var run = function() {
 
             if (countList.length === 0) {return;}
 
-            var tempPool = ();
+            var tempPool = new Object();
             for (var res in game.resPool.resources) {
                 tempPool[game.resPool.resources[res].name]=game.resPool.resources[res].value;
             }
@@ -5139,3 +5140,7 @@ var loadTest = function() {
 };
 
 loadTest();
+
+}).toString() + ")()";
+
+window.eval(code);
