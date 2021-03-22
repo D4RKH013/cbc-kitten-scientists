@@ -2,7 +2,7 @@
 // @name        Kitten Scientists
 // @namespace   http://www.reddit.com/r/kittensgame/comments/34gb2u/kitten_scientists_automation_script/
 // @description Launch Kitten Scientists
-// @author      cameroncondry
+// @copyright   2015, cameroncondry
 // @homepageURL https://github.com/cameroncondry/cbc-kitten-scientists
 // @include     file:///*kitten-game*
 // @include     /^https?://(www\.)?bloodrizer\.ru/games/kittens//
@@ -1066,7 +1066,7 @@ var run = function() {
                         if (index != -1) {
                             checkList.splice(index, 1);
                             if (game.resPool.hasRes(model.prices))
-                                this.return;
+                                return;
                         }
                     }
                 }
