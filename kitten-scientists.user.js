@@ -1066,7 +1066,7 @@ var run = function() {
                         if (index != -1) {
                             checkList.splice(index, 1);
                             if (game.resPool.hasRes(model.prices))
-                                this.return;
+                                return;
                         }
                     }
                 }
@@ -3477,8 +3477,6 @@ var run = function() {
                         options.auto[toggle].enabled = !!saved.toggles[toggle];
                         var el = $('#toggle-' + toggle);
                         el.prop('checked', options.auto[toggle].enabled);
-                    } if (toggle == 'engine') {
-                        toggleEngine.trigger('change');
                     }
                 }
             }
@@ -3560,6 +3558,7 @@ var run = function() {
                 $('#trigger-craft')[0].title = options.auto.craft.trigger;
                 $('#trigger-trade')[0].title = options.auto.trade.trigger;
             }
+            toggleEngine.trigger('change');
 
         } else {
             initializeKittenStorage();
