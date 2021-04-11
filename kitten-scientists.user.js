@@ -445,7 +445,7 @@ var run = function() {
     var i18n = function(key, args) {
         if (key[0] == "$")
             return i18ng(key.slice(1));
-        value = i18nData[lang][key];
+        var value = i18nData[lang][key];
         if (typeof value === 'undefined') {
             value = i18nData.en[key];
             if (!value) {
@@ -1292,8 +1292,8 @@ var run = function() {
                 // game.village.sim.promote check both gold and exp
                 if (game.village.sim.goldToPromote(rank, rank+1, gold-goldStock)[0] && game.village.sim.promote(leader, rank+1) == 1) {
                     iactivity('act.promote', [rank+1], 'ks-promote');
-                    gamePage.tabs[1].censusPanel.census.renderGovernment(gamePage.tabs[1].censusPanel.census);
-                    gamePage.tabs[1].censusPanel.census.update();
+                    game.tabs[1].censusPanel.census.renderGovernment(game.tabs[1].censusPanel.census);
+                    game.tabs[1].censusPanel.census.update();
                     storeForSummary('promote', 1);
                 }
             }
@@ -1599,7 +1599,7 @@ var run = function() {
             upgradeManager.sciManager.render();
             upgradeManager.spaManager.render();
 
-            if (upgrades.upgrades.enabled && gamePage.tabs[3].visible) {
+            if (upgrades.upgrades.enabled && game.tabs[3].visible) {
                 var work = game.workshop.upgrades;
                 workLoop:
                 for (var upg in work) {
@@ -1614,7 +1614,7 @@ var run = function() {
                 }
             }
 
-            if (upgrades.techs.enabled && gamePage.tabs[2].visible) {
+            if (upgrades.techs.enabled && game.tabs[2].visible) {
                 var tech = game.science.techs;
                 techLoop:
                 for (var upg in tech) {
@@ -1629,7 +1629,7 @@ var run = function() {
                 }
             }
 
-            if (upgrades.missions.enabled && gamePage.tabs[6].visible) {
+            if (upgrades.missions.enabled && game.tabs[6].visible) {
                 var missions = game.space.meta[0].meta;
                 missionLoop:
                 for (var i = 0; i < missions.length; i++) {
@@ -1649,7 +1649,7 @@ var run = function() {
                 }
             }
 
-            if (upgrades.races.enabled && gamePage.tabs[4].visible) {
+            if (upgrades.races.enabled && game.tabs[4].visible) {
                 var maxRaces = (game.diplomacy.get('leviathans').unlocked) ? 8 : 7;
                 if (game.diplomacyTab.racePanels.length < maxRaces) {
                     var manpower = craftManager.getValueAvailable('manpower', true);
@@ -2191,7 +2191,7 @@ var run = function() {
                 var btn = this.religionManager.manager.tab.zgUpgradeButtons[i];
                 if(validBuildings.indexOf(btn.id)!=-1){
                     if(btn.model.visible){
-                        unicornPrice = 0;
+                        var unicornPrice = 0;
                         for(var j in btn.model.prices){
                             if(btn.model.prices[j].name=='unicorns')
                                 unicornPrice += btn.model.prices[j].val;
@@ -2873,13 +2873,13 @@ var run = function() {
                     if (typeof(build.stage) !== 'undefined' && build.stage !== data.stage) {
                         continue;
                     }
-                    bList.push(new Object());
+                    bList.push({});
                     bList[counter].id = name;
                     bList[counter].label = build.label;
                     bList[counter].name = build.name;
                     bList[counter].stage = build.stage;
                     bList[counter].variant = build.variant;
-                    countList.push(new Object());
+                    countList.push({});
                     countList[counter].id = name;
                     countList[counter].name = build.name;
                     countList[counter].count = 0;
@@ -2908,7 +2908,7 @@ var run = function() {
 
             if (countList.length === 0) {return;}
 
-            var tempPool = new Object();
+            var tempPool = {};
             for (var res in game.resPool.resources) {
                 tempPool[game.resPool.resources[res].name]=game.resPool.resources[res].value;
             }
@@ -3875,11 +3875,11 @@ var run = function() {
 
         var addi = options.auto.faith.addition;
         for (var itemName in addi) {
-            node = getOption(itemName, addi[itemName]);
+            var node = getOption(itemName, addi[itemName]);
 
             if (itemName == 'bestUnicornBuilding') {
                 node.children('label').prop('title', i18n('option.faith.best.unicorn.desc'));
-                input = node.children('input');
+                var input = node.children('input');
                 input.unbind('change');
                 var bub = addi.bestUnicornBuilding;
                 input.on('change', function () {
